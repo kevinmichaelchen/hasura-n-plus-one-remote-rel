@@ -20,9 +20,6 @@ tasks:
       # Stop containers, clear volumes
       - pkgx docker-clean@latest stop || true
       
-      # Kill the application running on port 8081
-      - pkgx killport@latest 8081
-      
       # Start Postgres
       - docker compose up -d postgres
       

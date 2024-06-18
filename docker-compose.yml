@@ -1,5 +1,10 @@
-version: "3.8"
 services:
+  nicknameSvc:
+    build:
+      context: .
+    ports:
+      - "127.0.0.1:8081:8081"
+
   postgres:
     image: postgres:16
     environment:
@@ -20,13 +25,14 @@ services:
     env_file:
       - .env
     ports:
-      - 127.0.0.1:8080:8080
+      - "127.0.0.1:8080:8080"
     depends_on:
       - "postgres"
     restart: always
     volumes:
       - ./hasura:/var/schema
     environment:
+      NICKNAME_SERVICE: "http://nicknameSvc:8081"
       HASURA_GRAPHQL_MIGRATIONS_DIR: "/var/schema/migrations"
       HASURA_GRAPHQL_METADATA_DIR: "/var/schema/metadata"
       HASURA_GRAPHQL_DEV_MODE: "true"

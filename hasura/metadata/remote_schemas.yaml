@@ -1,6 +1,6 @@
 - name: nickname-service
   definition:
-    url: http://host.docker.internal:8081/query
+    url: '{{NICKNAME_SERVICE}}/query'
     timeout_seconds: 60
     customization:
       root_fields_namespace: nicknames

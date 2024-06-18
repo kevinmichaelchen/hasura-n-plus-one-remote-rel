@@ -1,5 +1,5 @@
 services:
-  nicknameSvc:
+  nickname-svc:
     build:
       context: .
     ports:
@@ -32,7 +32,7 @@ services:
     volumes:
       - ./hasura:/var/schema
     environment:
-      NICKNAME_SERVICE: "http://nicknameSvc:8081"
+      NICKNAME_SERVICE: "http://nickname-svc:8081"
       HASURA_GRAPHQL_MIGRATIONS_DIR: "/var/schema/migrations"
       HASURA_GRAPHQL_METADATA_DIR: "/var/schema/metadata"
       HASURA_GRAPHQL_DEV_MODE: "true"

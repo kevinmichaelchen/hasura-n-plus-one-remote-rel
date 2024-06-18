@@ -68,3 +68,9 @@ This is the `N + 1` problem (or `1 + N` problem, if you prefer). Hasura will
 make one call for the owners, and then N calls for each of their nicknames.
 
 **There is no batching happening!**
+
+## How to solve?
+
+Hasura needs to support batching, similar to [how Tailcall does][tailcall].
+
+[tailcall]: https://tailcall.run/docs/graphql-n-plus-one-problem-solved-tailcall/#batch-apis

@@ -1,45 +1,30 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"log"
-	"net/http"
+	"github.com/99designs/gqlgen/graphql/handler"
+	_ "github.com/99designs/gqlgen/graphql/introspection"
+	"github.com/gin-gonic/gin"
+	"github.com/kevinmichaelchen/hasura-n-plus-one-remote-rel/internal/handler/graphql"
+	"github.com/kevinmichaelchen/hasura-n-plus-one-remote-rel/internal/handler/graphql/generated"
 )
 
-// Request represents the expected JSON request structure
-type Request struct {
-	ID int `json:"id"`
-}
-
-// Response represents the JSON response structure
-type Response struct {
-	Message string `json:"message"`
-}
-
 func main() {
-	http.HandleFunc("/", handleRequest)
-	log.Println("Server listening on port 8081...")
-	log.Fatal(http.ListenAndServe(":8081", nil))
-}
+	h := handler.NewDefaultServer(
+		generated.NewExecutableSchema(
+			generated.Config{
+				Resolvers: &graphql.Resolver{},
+			},
+		),
+	)
 
-func handleRequest(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
+	r := gin.Default()
 
-	var req Request
-	err := json.NewDecoder(r.Body).Decode(&req)
+	r.POST("/query", func(c *gin.Context) {
+		h.ServeHTTP(c.Writer, c.Request)
+	})
+
+	err := r.Run(":8081")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		panic(err)
 	}
-
-	resp := Response{
-		Message: fmt.Sprintf("Received ID: %d", req.ID),
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(resp)
 }

@@ -8,6 +8,8 @@ includes:
     taskfile: taskfiles/hasura.yml
   atlas:
     taskfile: taskfiles/atlas.yml
+  graphql:
+    taskfile: taskfiles/graphql.yml
 
 tasks:
   start:

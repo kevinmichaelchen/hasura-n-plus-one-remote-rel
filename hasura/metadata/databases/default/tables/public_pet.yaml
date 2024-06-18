@@ -5,3 +5,14 @@ object_relationships:
   - name: owner
     using:
       foreign_key_constraint_on: owner_id
+remote_relationships:
+  - definition:
+      to_remote_schema:
+        lhs_fields:
+          - id
+        remote_field:
+          petNickname:
+            arguments:
+              petID: $id
+        remote_schema: nickname-service
+    name: nickname

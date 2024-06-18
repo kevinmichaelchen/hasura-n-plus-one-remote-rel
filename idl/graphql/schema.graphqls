@@ -1,0 +1,16 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Query {
+  ownerNickname(ownerID: Int!): String!
+  petNickname(petID: Int!): String!
+}
+
+input CreateOwnerInput {
+  name: String!
+}
+
+type Mutation {
+  createOwner(input: CreateOwnerInput!): Int!
+}

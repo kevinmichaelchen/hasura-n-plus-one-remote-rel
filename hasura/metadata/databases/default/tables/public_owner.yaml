@@ -9,3 +9,14 @@ array_relationships:
         table:
           name: pet
           schema: public
+remote_relationships:
+  - definition:
+      to_remote_schema:
+        lhs_fields:
+          - id
+        remote_field:
+          ownerNickname:
+            arguments:
+              ownerID: $id
+        remote_schema: nickname-service
+    name: nickname

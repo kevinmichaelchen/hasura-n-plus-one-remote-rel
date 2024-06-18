@@ -1,0 +1,7 @@
+version: "3"
+
+tasks:
+  gen-server:
+    desc: "Generate GraphQL server (gqlgen) code"
+    cmds:
+      - pkgx gqlgen@latest generate

@@ -1,6 +1,7 @@
 # hasura-n-plus-one-remote-rel
 
-This demo shows the N+1 problem in Hasura when using Remote Relationships (“remote joins”).
+This demo shows the N+1 problem in Hasura when using Remote Relationships
+(“remote joins”).
 
 ## Getting started
 
@@ -14,36 +15,51 @@ You will also need [pkgx](https://pkgx.sh/):
 sudo rm -rf $(which pkgx) ; curl -fsS https://pkgx.sh | sh
 ```
 
-### Step 1: Run everything
+### Step 1: Run Go service
+
+```shell
+go run main.go
+```
+
+### Step 2: Run everything else
 
 ```shell
 pkgx task start
 ```
 
-## Using the API
-
-### Creating some data
+### Step 3: Create some data
 
 ```graphql
-mutation CreateOwnerAndPet {
-  owner: insertOwnerOne(
-    object: {
-      name: "Kevin"
-      pets: {
-        data: {
-          name: "Porkchop"
-        }
-      }
-    }
+mutation SeedData {
+  owners: insertOwner(
+    objects: [
+      { name: "Gravy", pets: { data: { name: "Porkchop" } } }
+      { name: "Blueberry", pets: { data: { name: "Oatmeal" } } }
+    ]
   ) {
-    id
-    name
-    pets {
+    returning {
       id
       name
+      pets {
+        id
+        name
+      }
     }
   }
 }
 ```
 
-[atlas]: https://atlasgo.io/
+### Step 4: Query remote schemas
+
+```graphql
+query GetStuff {
+  owners: owner {
+    id
+    nickname
+    pets {
+      id
+      nickname
+    }
+  }
+}
+```

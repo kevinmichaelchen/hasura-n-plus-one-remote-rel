@@ -4,7 +4,7 @@ services:
       context: .
     environment:
       OTEL_SERVICE_NAME: "nickname-svc"
-      OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4318"
     ports:
       - "127.0.0.1:8081:8081"
 

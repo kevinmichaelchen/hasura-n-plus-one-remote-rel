@@ -17,8 +17,13 @@ sudo rm -rf $(which pkgx) ; curl -fsS https://pkgx.sh | sh
 
 ### Step 1: Run everything
 
+`HASURA_GRAPHQL_PRO_KEY` is necessary if you want to see tracing working in
+[Jaeger locally](http://localhost:16686).
+
 ```shell
-pkgx task start
+export HASURA_GRAPHQL_PRO_KEY=foobar
+
+make
 ```
 
 ### Step 2: Create some data
@@ -73,4 +78,5 @@ make one call for the owners, and then N calls for each of their nicknames.
 
 Hasura needs to support batching, similar to [how Tailcall does][tailcall].
 
-[tailcall]: https://tailcall.run/docs/graphql-n-plus-one-problem-solved-tailcall/#batch-apis
+[tailcall]:
+  https://tailcall.run/docs/graphql-n-plus-one-problem-solved-tailcall/#batch-apis

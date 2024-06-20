@@ -1,0 +1,45 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: :4317
+      http:
+        endpoint: :4318
+
+processors:
+  batch:
+
+exporters:
+  otlp/jaeger:
+    endpoint: http://jaeger:4317
+    tls:
+      insecure: true
+
+  # Enabled from time-to-time to view telemetry in the logs
+  debug:
+    verbosity: detailed
+
+service:
+  pipelines:
+    traces:
+      receivers:
+        - otlp
+      processors:
+        - batch
+      exporters:
+        - debug # Lets us view spans in logs
+        - otlp/jaeger
+    metrics:
+      receivers:
+        - otlp
+      processors:
+        - batch
+      exporters:
+        - debug
+    logs:
+      receivers:
+        - otlp
+      processors:
+        - batch
+      exporters:
+        - debug

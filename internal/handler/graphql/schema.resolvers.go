@@ -8,9 +8,11 @@ import (
 	"context"
 	"fmt"
 	"github.com/charmbracelet/log"
-
 	"github.com/kevinmichaelchen/hasura-n-plus-one-remote-rel/internal/handler/graphql/generated"
 	"github.com/kevinmichaelchen/hasura-n-plus-one-remote-rel/internal/handler/model"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/trace"
+	"strconv"
 )
 
 // CreateOwner is the resolver for the createOwner field.
@@ -20,6 +22,16 @@ func (r *mutationResolver) CreateOwner(ctx context.Context, input model.CreateOw
 
 // OwnerNickname is the resolver for the ownerNickname field.
 func (r *queryResolver) OwnerNickname(ctx context.Context, ownerID int) (string, error) {
+	ctx, span := trace.SpanFromContext(ctx).
+		TracerProvider().
+		Tracer("").
+		Start(ctx, "OwnerNickname",
+			trace.WithAttributes(
+				attribute.String("owner_id", strconv.Itoa(ownerID)),
+			),
+		)
+	defer span.End()
+
 	log.Info("OwnerNickname", "ownerID", ownerID)
 
 	return "fancyOwnerNickname", nil
@@ -27,6 +39,16 @@ func (r *queryResolver) OwnerNickname(ctx context.Context, ownerID int) (string,
 
 // PetNickname is the resolver for the petNickname field.
 func (r *queryResolver) PetNickname(ctx context.Context, petID int) (string, error) {
+	ctx, span := trace.SpanFromContext(ctx).
+		TracerProvider().
+		Tracer("").
+		Start(ctx, "PetNickname",
+			trace.WithAttributes(
+				attribute.String("pet_id", strconv.Itoa(petID)),
+			),
+		)
+	defer span.End()
+
 	log.Info("PetNickname", "petID", petID)
 
 	return "fancyPetNickname", nil

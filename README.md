@@ -9,9 +9,9 @@ This demo shows the N+1 problem in Hasura when using Remote Relationships
 
 1. Docker
 1. [pkgx](https://pkgx.sh/)
-  1. install with … `sudo rm -rf $(which pkgx) ; curl -fsS https://pkgx.sh | sh`
+   1. install with … `sudo rm -rf $(which pkgx) ; curl -fsS https://pkgx.sh | sh`
 1. A Hasura Pro Key to see traces [locally in Jaeger](http://localhost:16686)
-  1. `export HASURA_GRAPHQL_PRO_KEY=foobar`
+   1. `export HASURA_GRAPHQL_PRO_KEY=foobar`
 
 ### Step 1: Run everything
 

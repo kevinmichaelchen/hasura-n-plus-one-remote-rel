@@ -7,22 +7,15 @@ This demo shows the N+1 problem in Hasura when using Remote Relationships
 
 ### Step 0: Prerequisites
 
-You will need Docker.
-
-You will also need [pkgx](https://pkgx.sh/):
-
-```shell
-sudo rm -rf $(which pkgx) ; curl -fsS https://pkgx.sh | sh
-```
+1. Docker
+1. [pkgx](https://pkgx.sh/)
+  1. install with … `sudo rm -rf $(which pkgx) ; curl -fsS https://pkgx.sh | sh`
+1. A Hasura Pro Key to see traces [locally in Jaeger](http://localhost:16686)
+  1. `export HASURA_GRAPHQL_PRO_KEY=foobar`
 
 ### Step 1: Run everything
 
-`HASURA_GRAPHQL_PRO_KEY` is necessary if you want to see tracing working in
-[Jaeger locally](http://localhost:16686).
-
 ```shell
-export HASURA_GRAPHQL_PRO_KEY=foobar
-
 make
 ```
 

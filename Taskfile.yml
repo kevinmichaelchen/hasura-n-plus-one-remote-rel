@@ -32,6 +32,9 @@ tasks:
       # Spin up other containers
       - docker compose up -d
       
+      # Give Hasura some time to start
+      - sleep 3
+      
       # Wait until Hasura is healthy... with Exponential Backoff
       - pkgx eb -x 20 -- curl http://localhost:8080/healthz
       

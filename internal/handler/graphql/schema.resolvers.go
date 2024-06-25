@@ -12,7 +12,9 @@ import (
 	"github.com/kevinmichaelchen/hasura-n-plus-one-remote-rel/internal/handler/model"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
+	"math/rand"
 	"strconv"
+	"time"
 )
 
 // CreateOwner is the resolver for the createOwner field.
@@ -32,7 +34,11 @@ func (r *queryResolver) OwnerNickname(ctx context.Context, ownerID int) (string,
 		)
 	defer span.End()
 
-	log.Info("OwnerNickname", "ownerID", ownerID)
+	d := randomDuration()
+
+	log.Info("OwnerNickname", "ownerID", ownerID, "latency", d)
+
+	time.Sleep(d)
 
 	return "fancyOwnerNickname", nil
 }
@@ -49,7 +55,11 @@ func (r *queryResolver) PetNickname(ctx context.Context, petID int) (string, err
 		)
 	defer span.End()
 
-	log.Info("PetNickname", "petID", petID)
+	d := randomDuration()
+
+	log.Info("PetNickname", "petID", petID, "latency", d)
+
+	time.Sleep(d)
 
 	return "fancyPetNickname", nil
 }
@@ -62,3 +72,10 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
+
+func randomDuration() time.Duration {
+	baseLatency := 50 * time.Millisecond
+	extraLatency := time.Duration(rand.Intn(10)*10) * time.Millisecond
+
+	return baseLatency + extraLatency
+}

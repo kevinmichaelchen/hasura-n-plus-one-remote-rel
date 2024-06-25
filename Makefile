@@ -6,3 +6,7 @@ endif
 .PHONY: all
 all:
 	pkgx task start
+
+.PHONY: rebuild
+rebuild:
+	docker compose build --no-cache nickname-svc
